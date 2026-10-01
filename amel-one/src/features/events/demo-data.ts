@@ -1,0 +1,42 @@
+export const demoEvents = [
+  {
+    id: "expo",
+    name: "African Business Expo 2027",
+    kind: "EXHIBITION",
+    date: "18–20 March 2027",
+    location: "Addis Ababa, Ethiopia",
+    stage: "REGISTER",
+    registrations: 843,
+    capacity: 1200,
+    color: "teal",
+  },
+  {
+    id: "creative",
+    name: "The Creative Exchange",
+    kind: "NETWORKING",
+    date: "24 April 2027",
+    location: "Nairobi, Kenya",
+    stage: "BUILD",
+    registrations: 0,
+    capacity: 200,
+    color: "sand",
+  },
+  {
+    id: "leadership",
+    name: "Leaders in Motion",
+    kind: "CONFERENCE",
+    date: "12 February 2027",
+    location: "Addis Ababa, Ethiopia",
+    stage: "PREPARE",
+    registrations: 186,
+    capacity: 200,
+    color: "clay",
+  },
+] as const;
+export const demoRegistrations = Array.from({ length: 50 }, (_, index) => ({
+  id: `demo-${String(index + 1).padStart(3, "0")}`,
+  fullName: `Demo guest ${index + 1}`,
+  email: `guest${index + 1}@example.test`,
+  type: ["Visitor", "Exhibitor", "VIP", "Speaker"][index % 4],
+  status: ["approved", "approved", "pending", "rejected"][index % 4],
+}));
