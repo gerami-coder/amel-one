@@ -26,16 +26,10 @@ This uses Vercel's Production target as the stable development URL, APP_ENV=prev
 - Cross-tenant SQL tests passed inside a rolled-back transaction, including read/update/delete denial and denied publishing/membership escalation.
 - Supabase security advisors returned no findings after the foundation migration.
 
-## Open gate
+## Email verification and next phase
 
-Signup email delivery, confirmation-link exchange and password-reset email delivery have not passed end-to-end verification. Supabase custom SMTP is currently disabled. Its default sender only delivers to project team members; see https://supabase.com/docs/guides/auth/auth-smtp.
-
-The owner requested help setting up an email provider. Resend is the proposed provider, pending account sign-in and an owned sending domain/DNS configuration. Keep confirmation enabled. Do not present public signup as ready until real delivery and callback verification pass.
-
-The brief requires the foundation to be stable before Phase 1. Registration types, form building, publishing and public event registration remain pending. No Phase 2 features have started.
+The owner confirmed signup email delivery through the configured SMTP provider, and the account is confirmed. Password recovery remains unverified. The owner explicitly requested Phase 1; its implementation and verification are recorded in PHASE-1-REPORT.md. No Phase 2 features have started.
 
 ## Test identity
 
-Authenticated tests use an explicitly provisioned disposable identity in amel-one-dev. Local .test-fixture.json contains its email and password and is ignored by Git. Tests skip when that file is absent, including ordinary CI; a skipped test is not proof of hosted authentication. Never upload fixture files, traces containing sessions, or credentials.
-
-Keep screenshots local under artifacts; the production site contains illustrative sample event data clearly labeled as such.
+Authenticated tests use an explicitly provisioned disposable development identity. Local .test-fixture.json and artifacts are ignored; never upload credentials or session traces. Ordinary CI without the fixture skips those journeys and does not prove hosted authentication.

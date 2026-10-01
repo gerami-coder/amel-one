@@ -17,13 +17,11 @@ test("real login, organization onboarding and logout persist", async ({
   await page.getByRole("button", { name: "Log in", exact: true }).click();
   await expect(page).toHaveURL(/\/(onboarding|dashboard)$/, { timeout: 20000 });
   await expect(
-    page
-      .getByRole("button", { name: "Create workspace", exact: true })
-      .or(
-        page.getByRole("heading", {
-          name: "Welcome to Verification workspace.",
-        }),
-      ),
+    page.getByRole("button", { name: "Create workspace", exact: true }).or(
+      page.getByRole("heading", {
+        name: "Welcome to Verification workspace.",
+      }),
+    ),
   ).toBeVisible({ timeout: 20000 });
   if (
     await page

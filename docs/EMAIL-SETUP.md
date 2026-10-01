@@ -1,18 +1,10 @@
 # Authentication email setup
+On 1 October 2026 the owner configured an existing SMTP provider directly in Supabase. Saved settings were verified in a fresh dashboard tab. The owner subsequently confirmed the signup email arrived; the account has email_confirmed_at populated. Resend onboarding is no longer required.
 
-Status: pending Resend account sign-in and the owner's sending domain. No SMTP credential has been created or installed.
+Sender name: Amel One. Transport: implicit TLS port 465, minimum interval 60 seconds per user. A workstation probe negotiated TLS 1.3, validated the hostname certificate and received the SMTP greeting. SMTP credentials remain in Supabase and are not copied into the app or repository.
 
-Use Resend SMTP with Supabase Auth, without a Resend SDK or email key in the Next.js runtime. Supabase remains responsible for generating confirmation/recovery links. Keep signup confirmation enabled.
+The confirmed account and successful delivery resolve the signup email check. Password recovery delivery and reset completion remain unverified; the owner must enter any new password themselves. Keep email confirmation enabled. Do not change DNS, rotate credentials or install a replacement provider without a concrete need.
 
-1. Owner signs in to Resend or creates a free account and accepts its terms.
-2. Owner identifies a domain and DNS provider. Use a dedicated authentication subdomain where practical.
-3. Add the domain in Resend and add only the exact DNS records Resend supplies. Do not replace existing root-domain MX/SPF records.
-4. Wait for verified sending status.
-5. Create a domain-restricted sending credential and enter it directly in Supabase's custom SMTP settings. Never paste credentials in chat or commit them.
-6. Use Resend's current SMTP host/port/username documentation and a sender at the verified domain. Verify free-plan limits in the account; do not enable paid overages without authorization.
-7. Test signup confirmation and password recovery with an owner-approved inbox on the hosted app. Confirm email delivery, callback/session behavior and successful login.
-8. Record results and enable Phase 1 only after the foundation gate passes.
+This SMTP integration sends Supabase authentication messages. Phase 1 attendee registration provides an on-screen receipt only; attendee emails require a later communications adapter and are not claimed as delivered.
 
-Official instructions: https://resend.com/docs/send-with-supabase-smtp
-Current plan details: https://resend.com/pricing
-Supabase default-sender restrictions: https://supabase.com/docs/guides/auth/auth-smtp
+Documentation: https://supabase.com/docs/guides/auth/auth-smtp
