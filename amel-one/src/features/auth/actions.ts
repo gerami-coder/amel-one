@@ -98,7 +98,7 @@ export async function createOrganization(
 }
 export async function logout() {
   const db = await serverClient();
-  const { error } = await db.auth.signOut();
+  const { error } = await db.auth.signOut({ scope: "local" });
   if (error) throw new Error("Sign out failed");
   redirect("/login");
 }

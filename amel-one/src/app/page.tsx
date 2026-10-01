@@ -162,7 +162,7 @@ export default function Home() {
           <Link href="/signup" className="button light">
             Create your event <ArrowRight size={18} />
           </Link>
-          <p>Development preview · registration tools are being built.</p>
+          <p>Development preview · create, publish, and welcome your guests.</p>
         </section>
       </main>
       <footer className="site-footer wrap">

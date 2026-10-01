@@ -1,3 +1,4 @@
+import { brand } from "@/config/brand";
 import Link from "next/link";
 import { Brand } from "./brand";
 import {
@@ -42,7 +43,7 @@ export function Shell({
             <br />
             great gathering.
           </p>
-          <span>One platform. Every event.</span>
+          <span>{brand.tagline}</span>
         </div>
         <Link href="/" className="back-link">
           Visit website <ArrowUpRight size={16} />

@@ -14,6 +14,38 @@ export type Database = {
   };
   public: {
     Tables: {
+      attendees: {
+        Row: {
+          created_at: string;
+          email: string;
+          full_name: string;
+          id: string;
+          organization_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          email: string;
+          full_name: string;
+          id?: string;
+          organization_id: string;
+        };
+        Update: {
+          created_at?: string;
+          email?: string;
+          full_name?: string;
+          id?: string;
+          organization_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "attendees_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       audit_logs: {
         Row: {
           action: string;
@@ -52,10 +84,47 @@ export type Database = {
           },
         ];
       };
-      events: {
+      event_versions: {
         Row: {
           created_at: string;
+          event_id: string;
+          id: string;
+          organization_id: string;
+          snapshot: Json;
+          version: number;
+        };
+        Insert: {
+          created_at?: string;
+          event_id: string;
+          id?: string;
+          organization_id: string;
+          snapshot: Json;
+          version: number;
+        };
+        Update: {
+          created_at?: string;
+          event_id?: string;
+          id?: string;
+          organization_id?: string;
+          snapshot?: Json;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "event_versions_organization_id_event_id_fkey";
+            columns: ["organization_id", "event_id"];
+            isOneToOne: false;
+            referencedRelation: "events";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      events: {
+        Row: {
+          active_version_id: string | null;
+          created_at: string;
           description: string;
+          draft: Json;
           ends_at: string;
           event_type: string;
           id: string;
@@ -64,14 +133,17 @@ export type Database = {
           organization_id: string;
           published_at: string | null;
           registration_closes_at: string | null;
+          revision: number;
           slug: string;
           starts_at: string;
           timezone: string;
           updated_at: string;
         };
         Insert: {
+          active_version_id?: string | null;
           created_at?: string;
           description?: string;
+          draft?: Json;
           ends_at: string;
           event_type?: string;
           id?: string;
@@ -80,14 +152,17 @@ export type Database = {
           organization_id: string;
           published_at?: string | null;
           registration_closes_at?: string | null;
+          revision?: number;
           slug: string;
           starts_at: string;
           timezone?: string;
           updated_at?: string;
         };
         Update: {
+          active_version_id?: string | null;
           created_at?: string;
           description?: string;
+          draft?: Json;
           ends_at?: string;
           event_type?: string;
           id?: string;
@@ -96,12 +171,20 @@ export type Database = {
           organization_id?: string;
           published_at?: string | null;
           registration_closes_at?: string | null;
+          revision?: number;
           slug?: string;
           starts_at?: string;
           timezone?: string;
           updated_at?: string;
         };
         Relationships: [
+          {
+            foreignKeyName: "active_version_event_fk";
+            columns: ["organization_id", "id", "active_version_id"];
+            isOneToOne: false;
+            referencedRelation: "event_versions";
+            referencedColumns: ["organization_id", "event_id", "id"];
+          },
           {
             foreignKeyName: "events_organization_id_fkey";
             columns: ["organization_id"];
@@ -180,6 +263,185 @@ export type Database = {
         };
         Relationships: [];
       };
+      registration_answers: {
+        Row: {
+          answers: Json;
+          organization_id: string;
+          registration_id: string;
+        };
+        Insert: {
+          answers: Json;
+          organization_id: string;
+          registration_id: string;
+        };
+        Update: {
+          answers?: Json;
+          organization_id?: string;
+          registration_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "registration_answers_organization_id_registration_id_fkey";
+            columns: ["organization_id", "registration_id"];
+            isOneToOne: true;
+            referencedRelation: "registrations";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      registration_status_history: {
+        Row: {
+          actor_id: string | null;
+          created_at: string;
+          from_status: string | null;
+          id: string;
+          organization_id: string;
+          registration_id: string;
+          to_status: string;
+        };
+        Insert: {
+          actor_id?: string | null;
+          created_at?: string;
+          from_status?: string | null;
+          id?: string;
+          organization_id: string;
+          registration_id: string;
+          to_status: string;
+        };
+        Update: {
+          actor_id?: string | null;
+          created_at?: string;
+          from_status?: string | null;
+          id?: string;
+          organization_id?: string;
+          registration_id?: string;
+          to_status?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "registration_status_history_organization_id_registration_i_fkey";
+            columns: ["organization_id", "registration_id"];
+            isOneToOne: false;
+            referencedRelation: "registrations";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      registration_types: {
+        Row: {
+          active: boolean;
+          approval: boolean;
+          capacity: number;
+          event_id: string;
+          id: string;
+          name: string;
+          organization_id: string;
+        };
+        Insert: {
+          active?: boolean;
+          approval?: boolean;
+          capacity: number;
+          event_id: string;
+          id: string;
+          name: string;
+          organization_id: string;
+        };
+        Update: {
+          active?: boolean;
+          approval?: boolean;
+          capacity?: number;
+          event_id?: string;
+          id?: string;
+          name?: string;
+          organization_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "registration_types_organization_id_event_id_fkey";
+            columns: ["organization_id", "event_id"];
+            isOneToOne: false;
+            referencedRelation: "events";
+            referencedColumns: ["organization_id", "id"];
+          },
+        ];
+      };
+      registrations: {
+        Row: {
+          attendee_id: string;
+          created_at: string;
+          email: string;
+          event_id: string;
+          fingerprint: string;
+          full_name: string;
+          id: string;
+          organization_id: string;
+          reference: string;
+          request_id: string;
+          status: string;
+          type_id: string;
+          version_id: string;
+        };
+        Insert: {
+          attendee_id: string;
+          created_at?: string;
+          email: string;
+          event_id: string;
+          fingerprint: string;
+          full_name: string;
+          id?: string;
+          organization_id: string;
+          reference?: string;
+          request_id: string;
+          status: string;
+          type_id: string;
+          version_id: string;
+        };
+        Update: {
+          attendee_id?: string;
+          created_at?: string;
+          email?: string;
+          event_id?: string;
+          fingerprint?: string;
+          full_name?: string;
+          id?: string;
+          organization_id?: string;
+          reference?: string;
+          request_id?: string;
+          status?: string;
+          type_id?: string;
+          version_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "registrations_organization_id_attendee_id_fkey";
+            columns: ["organization_id", "attendee_id"];
+            isOneToOne: false;
+            referencedRelation: "attendees";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "registrations_organization_id_event_id_fkey";
+            columns: ["organization_id", "event_id"];
+            isOneToOne: false;
+            referencedRelation: "events";
+            referencedColumns: ["organization_id", "id"];
+          },
+          {
+            foreignKeyName: "registrations_organization_id_event_id_type_id_fkey";
+            columns: ["organization_id", "event_id", "type_id"];
+            isOneToOne: false;
+            referencedRelation: "registration_types";
+            referencedColumns: ["organization_id", "event_id", "id"];
+          },
+          {
+            foreignKeyName: "registrations_organization_id_event_id_version_id_fkey";
+            columns: ["organization_id", "event_id", "version_id"];
+            isOneToOne: false;
+            referencedRelation: "event_versions";
+            referencedColumns: ["organization_id", "event_id", "id"];
+          },
+        ];
+      };
       role_permissions: {
         Row: {
           permission_key: string;
@@ -230,7 +492,33 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      create_event: { Args: { payload: Json }; Returns: Json };
       create_organization: { Args: { org_name: string }; Returns: string };
+      public_event: { Args: { event_slug: string }; Returns: Json };
+      publish_event: {
+        Args: { expected_revision: number; target: string };
+        Returns: string;
+      };
+      review_registration: {
+        Args: { decision: string; target: string };
+        Returns: undefined;
+      };
+      save_event: {
+        Args: { expected_revision: number; payload: Json; target: string };
+        Returns: Json;
+      };
+      submit_registration: {
+        Args: {
+          answers: Json;
+          email_address: string;
+          event_slug: string;
+          name: string;
+          registration_type: string;
+          request: string;
+          version: string;
+        };
+        Returns: Json;
+      };
     };
     Enums: {
       [_ in never]: never;

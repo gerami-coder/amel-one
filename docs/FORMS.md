@@ -1,9 +1,8 @@
-# Form architecture
+# Forms and publication
+Implemented: fixed full name/email identity inputs plus text, email, telephone, textarea, select and checkbox fields. Stable UUIDs identify custom fields; limits are 30 fields, 20 options per select and 12 registration types. Shared Zod contracts validate configuration and answers, with SQL validation at the public RPC boundary. Unknown answers are discarded. Required, length, option and email checks run before persistence.
 
-Phase 1 uses a bounded JSON schema with stable UUID field IDs, labels, type, requiredness, help text, options and validation limits. Start with text, email, telephone, textarea, select and checkbox. Reject unknown field types and excessive counts or lengths server-side.
+The builder supports drag sorting, keyboard sorting, move buttons, undo/redo and contextual properties. Keyboard shortcuts defer to native text editing inside inputs. Mobile stacks the palette, canvas and property editor. Event setup tabs support arrows/Home/End. Draft autosave is debounced and serialized; stale revisions show a conflict without overwriting another editor. Unsaved changes trigger an unload warning. Preview flushes the draft first.
 
-Drafts can change. Publishing creates an immutable version; registrations point at that exact version and answers use field IDs, preserving historical meaning. Never rewrite an old version to rename or delete a field.
+Publish validates completeness and snapshots basics, form and branding together. Existing registrations keep the exact version and labels used at submission. Public submissions reject stale versions with a reload message. Draft changes never alter the public page until republished. There is no conditional visibility evaluator in Phase 1; conditional fields, sections and complex rules are deferred.
 
-One evaluator is shared between preview and server validation. Hidden fields do not become required and their submitted values are discarded. Conditional rules must reference known earlier fields and reject cycles. Keep advanced rules deferred if they jeopardize the primary workflow.
-
-The builder needs button-based reordering, keyboard access, undo/redo, debounced saves, revision conflict checks and honest saving/error states. Mobile uses a single canvas with contextual editing rather than shrinking three panels.
+Branding includes three accessible themes, two heading styles, welcome/footer copy and validated logo upload. Arbitrary CSS, hero image editing, rich HTML and custom color controls are deferred. Confirmation is an on-screen receipt with an opaque reference and honest pending/approved state; attendee confirmation emails are not implemented.

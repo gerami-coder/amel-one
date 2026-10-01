@@ -1,5 +1,5 @@
 export const features = {
-  registrationWorkflow: false,
+  registrationWorkflow: true,
   badgeDesigner: false,
   payments: false,
   checkIn: false,
