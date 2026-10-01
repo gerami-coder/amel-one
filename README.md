@@ -3,7 +3,7 @@
 One platform. Every event. Built by Amel Events.
 
 ## Status
-Phase 0 foundation is in progress. Phase 1 registration work starts only after the foundation and a Vercel preview pass verification. No payment, badge issuance or check-in features are live.
+The development site is live at https://amel-one.vercel.app. Phase 0 code and hosted login are verified; signup/recovery email delivery awaits custom SMTP setup. See docs/DEPLOYMENT-VERIFICATION.md and docs/EMAIL-SETUP.md. Phase 1 registration work starts only after the foundation and a Vercel preview pass verification. No payment, badge issuance or check-in features are live.
 
 ## Layout
 The Next.js application is in `amel-one/`. Architecture and product contracts are in `docs/`. Root `AGENTS.md` governs all work.

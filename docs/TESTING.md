@@ -7,3 +7,5 @@ Unit tests cover tenant-aware permission evaluation, lifecycle date boundaries a
 Seed/test helpers require APP_ENV=development, explicit project reference confirmation and nonproduction URLs. Fake contacts use reserved example.test addresses. No generated password or service key belongs in source or logs. Development seeds are insert-only and idempotent; no truncate operation is permitted.
 
 Phase 0 gate additionally requires a verified Vercel preview and live Supabase connectivity. Phase 1 adds the complete signup-to-registration journey, replay/capacity checks, form version integrity and tenant isolation. A passing build alone is not acceptance.
+
+Hosted verification results are recorded in DEPLOYMENT-VERIFICATION.md. The optional authenticated test requires an ignored local .test-fixture.json with email and password for a disposable development user. E2E_BASE_URL selects the hosted target. CI without that fixture skips this test; never claim that skip verifies authentication.
